@@ -3,12 +3,15 @@ package calculations;
 import java.util.Scanner;
 
 
+
 public class CalcTest {
 	private static void wyswietlMenu() {
 		System.out.println("funkcje: abs(),log(),fact() ; q - quit");
 		System.out.println("Wpisz wyrazenie do obliczenia:");
 	}
 	private static void run() {
+
+
 		Scanner in = new Scanner(System.in);
 		try {
 			while(true) {

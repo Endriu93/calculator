@@ -6,7 +6,7 @@ public interface Operations {
 }
 
 enum Operators implements Operations {
-	ADD(1,"Add"), SUBTRACT(2,"Minus"), MULTIPLY(3,"Multiply"), DIVIDE(4,"Divide"), POV(5,"Power");
+	ADD(1,"Add"), SUBTRACT(1,"Minus"), MULTIPLY(3,"Multiply"), DIVIDE(3,"Divide"), POV(5,"Power");
 	final int priority;
 	final String fname;
 	Operators(int priority,String fname) {

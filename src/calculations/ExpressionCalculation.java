@@ -42,13 +42,21 @@ public class ExpressionCalculation {
 	private String convertInputStringToRPNConvertable(String input) {
 		String tmp = input.replaceAll(" ", "");
 		this.expressionToDisplay = tmp;
+
+		tmp = tmp.replaceAll("(\\d+)([.])(\\d+)(log|abs|fact|[(])", "$1$2$3*$4");
+		tmp = tmp.replaceAll("(\\d+)(log|abs|fact|[(])", "$1*$2");
+		tmp = tmp.replaceAll("([/]|\\*|\\^)-(log|abs|fact|[(])", "*-1$1$2");
+		tmp = tmp.replaceAll("([\\(])(-)", "(0-");
 		tmp = tmp.replaceAll("\\+|-|\\*|/|\\^|log|abs|fact|[(]|[)]", " $0 ");
 		tmp = tmp.replaceAll("  ", " ");
 		tmp = tmp.replaceAll("(\\d+) ([.]) (\\d+)", "$1$2$3");
-		tmp = tmp.replaceAll("([(]|\\*|\\^) (-||\\+) ([0-9])", "$1 $2$3");
+		tmp = tmp.replaceAll("([(]|\\*|\\^|[/]) (-||\\+) ([0-9])", "$1 $2$3");
 		tmp = tmp.trim();
 		try {
-			if(tmp.charAt(0) == '-' || tmp.charAt(0) == '+') {
+			if(tmp.charAt(0) == '-' ) {
+				tmp = tmp.replaceFirst("-", "0 -");
+			}
+			else if( tmp.charAt(0) == '+') {
 				tmp = tmp.replaceFirst(" ","");
 			}
 		} catch (IndexOutOfBoundsException e) {
@@ -107,11 +115,16 @@ public class ExpressionCalculation {
 			return;
 		}
 		try {
-			result = Double.parseDouble(stack.pop());
+			result = roundTo2Places(Double.parseDouble(stack.pop()));
 		} catch (NumberFormatException e) {
 			expressionValidation = false;
 		}
 
+	}
+	public static double roundTo2Places(double value) {
+		assert value >= Long.MIN_VALUE / 100 && value <= Long.MAX_VALUE / 100;
+		long digits = (long) (value < 0 ? value * 100 - 0.5 : value * 100 + 0.5);
+		return (double) digits / 100;
 	}
 	public double getResult() {
 		return result;
