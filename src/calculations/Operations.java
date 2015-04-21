@@ -1,5 +1,5 @@
 package calculations;
-
+//
 public interface Operations {
 	public int getPriority();
 	public String getFuncName();
